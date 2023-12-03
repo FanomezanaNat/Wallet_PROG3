@@ -83,7 +83,7 @@ components:
         example:
           type: InternalServerException
           message: Unexpected error   
-     status:
+    status:
       type: object
       properties:
         code:
