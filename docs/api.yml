@@ -117,6 +117,35 @@ paths:
           $ref: "#/components/responses/400"
         '500':
           $ref: "#/components/responses/500"
+    put:
+      tags:
+        - "account"
+      summary: Update an account
+      operationId: updateAccount
+      parameters:
+        - name: id
+          in: query
+          required: true
+          description: ID of the account to update
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/account"
+      responses:
+        '200':
+          description: Account updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/account"
+        '400':
+          $ref: "#/components/responses/400"
+        '500':
+          $ref: "#/components/responses/500"
 
 components:
   schemas:
