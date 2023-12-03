@@ -5,11 +5,33 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DatabaseConnection {
-    public Connection getConnection()throws SQLException {
-        return DriverManager.getConnection(
-                System.getenv("url"),
-                System.getenv("user"),
-                System.getenv("password")
-        );
+    private String url;
+    private String user;
+    private String password;
+
+
+    public DatabaseConnection() {
+        this.url = System.getenv("jdbc_url");
+        this.user = System.getenv("user");
+        this.password = System.getenv("password");
+    }
+
+
+    public Connection getConnection() {
+        if (this.url != null && this.user != null && this.password != null) {
+            try {
+                Connection connection = DriverManager.getConnection(this.url, this.user, this.password);
+                if (connection != null && connection.isValid(2)) {
+                    System.out.println("Connected successfully! Welcome, User!");
+                    return connection;
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("One or more environment variables are not set.");
+        }
+
+        return null;
     }
 }
