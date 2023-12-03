@@ -2,6 +2,7 @@ package Wallet.Entity;
 
 import lombok.*;
 
+import java.sql.Timestamp;
 import java.util.UUID;
 
 @Getter
@@ -12,7 +13,7 @@ import java.util.UUID;
 public class Transaction {
     private UUID id;
     private String type;
-    private String transactionDate;
+    private Timestamp transactionDate;
     private int amount;
     private int idAccount;
 
