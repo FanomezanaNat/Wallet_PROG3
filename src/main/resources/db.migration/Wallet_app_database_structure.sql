@@ -9,7 +9,7 @@ create table IF NOt EXISTS currency
 create table IF NOT EXISTS account
 (
     id         serial primary key not null,
-    idCurrency uuid references currency (id),
+    idCurrency uuid references currency (id)
 );
 
 
