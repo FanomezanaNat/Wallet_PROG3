@@ -11,11 +11,19 @@ tags:
 paths:
   /currency:
     get:
-      
-    
+      tags:
+        - "currency"
+      summary: get All currencies
+      operationId: getCurrencies
       responses:
         '200':
-          description: OK
+          description: operation successfully 
+          content:
+             application/json:
+              schema: 
+                type: array
+                items:
+                  $ref: "#/components/schemas/currency"
 
 components:
   schemas:
