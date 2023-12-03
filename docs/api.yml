@@ -32,6 +32,7 @@ components:
       properties:
         id: 
           type: string
+          format: uuid
         type:
           type: string
     account:
@@ -41,4 +42,20 @@ components:
           type: integer
         idCurrency: 
           type: string
+          format: uuid
+    transaction:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        type:
+          type: string
+        transactionDate:
+          type: string
+          format: datetime
+        amount:
+          type: integer
+        idAccount:
+          type: integer
         
