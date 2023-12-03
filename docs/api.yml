@@ -17,7 +17,7 @@ paths:
       operationId: getCurrencies
       responses:
         '200':
-          description: operation successfully 
+          description: successfully retrieved currencies
           content:
              application/json:
               schema: 
@@ -102,7 +102,6 @@ components:
     Response200:
       allOf:
         - $ref: "#/components/schemas/APIresponse"
-      description: operation successfully
   responses:
     '200':
       $ref: "#/components/schemas/Response200"
