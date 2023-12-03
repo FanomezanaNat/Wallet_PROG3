@@ -1,0 +1,29 @@
+openapi: '3.0.2'
+info:
+  title: Wallet management
+  version: '1.0'
+servers:
+  - url: https://wallet.com
+tags:
+  - name: "currency"
+  - name: "account"
+  - name: "transaction"
+paths:
+  /currency:
+    get:
+      
+    
+      responses:
+        '200':
+          description: OK
+
+components:
+  schemas:
+    currency:
+      type: object
+      properties:
+        id: 
+          type: string
+        type:
+          type: string
+        
