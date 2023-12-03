@@ -83,3 +83,23 @@ components:
         example:
           type: InternalServerException
           message: Unexpected error   
+     status:
+      type: object
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
+    body:
+      type: object
+    APIresponse:
+      type: object
+      properties:
+        status:
+          $ref: "#/components/schemas/status"
+        body:
+          $ref: "#/components/schemas/body"
+    Response200:
+      allOf:
+        - $ref: "#/components/schemas/APIresponse"
+      description: operation successfully
