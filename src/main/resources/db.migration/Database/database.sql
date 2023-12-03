@@ -1,1 +1,1 @@
-CREATE DATABASE  wallet OWNER prog_amdin;
+CREATE DATABASE  wallet OWNER prog_admin;
