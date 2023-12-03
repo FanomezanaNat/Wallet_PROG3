@@ -24,6 +24,8 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/currency"
+          '500':
+          $ref: "#/components/responses/500"
     post:
       tags:
         - "currency"
@@ -75,6 +77,23 @@ paths:
         '400':
           $ref: "#/components/responses/400"
         '500':
+          $ref: "#/components/responses/500"
+  /account:
+    get:
+      tags:
+        - "account"
+      summary: Get All accounts
+      operationId: getAccounts
+      responses:
+        '200':
+          description: Successfully retrieved accounts
+          content:
+            application/json:
+              schema: 
+                type: array
+                items:
+                  $ref: "#/components/schemas/account"
+          '500':
           $ref: "#/components/responses/500"
 components:
   schemas:
