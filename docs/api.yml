@@ -77,4 +77,9 @@ components:
       example:
         type: NotAuthorizedException
         message: Not authorized
-        
+    InternalServerException:
+        allOf:
+          - $ref: '#/components/schemas/Exception'
+        example:
+          type: InternalServerException
+          message: Unexpected error   
