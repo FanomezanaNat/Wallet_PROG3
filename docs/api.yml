@@ -51,7 +51,7 @@ paths:
     put:
       tags:
         - "currency"
-      summary: Create or Update a list of currency
+      summary:  Update a currency
       operationId: CrupdateCurrency
       parameters:
         - name: id
@@ -95,6 +95,29 @@ paths:
                   $ref: "#/components/schemas/account"
           '500':
           $ref: "#/components/responses/500"
+    post:
+      tags:
+        - "account"
+      summary: Create an account
+      operationId: createAccount
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/account"
+      responses:
+        '200':
+          description: Account created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/account"
+        '400':
+          $ref: "#/components/responses/400"
+        '500':
+          $ref: "#/components/responses/500"
+
 components:
   schemas:
     currency:
