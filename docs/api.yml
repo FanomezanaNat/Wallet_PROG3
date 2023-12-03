@@ -65,4 +65,10 @@ components:
               type: string
             message:
               type: string
+    BadRequestException:
+          allOf:
+            - $ref: '#/components/schemas/Exception'
+          example:
+            type: BadRequestException
+            message: Bad request
         
