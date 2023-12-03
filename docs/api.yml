@@ -24,7 +24,28 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/currency"
-
+    post:
+      tags:
+        - "currency"
+      summary: Create a currency
+      operationId: createCurrency
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/currency"
+      responses:
+        '200':
+          description: Currency created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/currency"
+        '400':
+          $ref: "#/components/responses/400"
+        '500':
+          $ref: "#/components/responses/500"
 components:
   schemas:
     currency:
