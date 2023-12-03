@@ -23,7 +23,7 @@ public class TransactionCrudOperations implements CrudOperations<Transaction>{
                 transactionList.add(new Transaction(
                         (UUID) resultSet.getObject("id"),
                         resultSet.getString("type"),
-                        resultSet.getString("transactionDate"),
+                        resultSet.getTimestamp("transactionDate"),
                         resultSet.getInt("amount"),
                         resultSet.getInt("idAccount")
                 ));
@@ -54,7 +54,7 @@ public class TransactionCrudOperations implements CrudOperations<Transaction>{
         try (PreparedStatement statement = connection.prepareStatement(sql)){
             statement.setObject(1, toSave.getId());
             statement.setString(2, toSave.getType());
-            statement.setTimestamp(3, Timestamp.valueOf(toSave.getTransactionDate()));
+            statement.setTimestamp(3, (toSave.getTransactionDate()));
             statement.setInt(4, toSave.getAmount());
             statement.setInt(5, toSave.getIdAccount());
 
