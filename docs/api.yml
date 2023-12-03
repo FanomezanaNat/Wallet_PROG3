@@ -146,6 +146,76 @@ paths:
           $ref: "#/components/responses/400"
         '500':
           $ref: "#/components/responses/500"
+  /transaction:
+    get:
+      tags:
+        - "transaction"
+      summary: Get All transactions
+      operationId: getTransactions
+      responses:
+        '200':
+          description: Successfully retrieved transactions
+          content:
+            application/json:
+              schema: 
+                type: array
+                items:
+                  $ref: "#/components/schemas/transaction"
+
+    post:
+      tags:
+        - "transaction"
+      summary: Create a transaction
+      operationId: createTransaction
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/transaction"
+      responses:
+        '200':
+          description: Transaction created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/transaction"
+        '400':
+          $ref: "#/components/responses/400"
+        '500':
+          $ref: "#/components/responses/500"
+
+    put:
+      tags:
+        - "transaction"
+      summary: Update a transaction
+      operationId: updateTransaction
+      parameters:
+        - name: id
+          in: query
+          required: true
+          description: ID of the transaction to update
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/transaction"
+      responses:
+        '200':
+          description: Transaction updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/transaction"
+        '400':
+          $ref: "#/components/responses/400"
+        '500':
+          $ref: "#/components/responses/500"
+
 
 components:
   schemas:
