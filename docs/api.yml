@@ -71,4 +71,10 @@ components:
           example:
             type: BadRequestException
             message: Bad request
+    NotAuthorizedException:
+      allOf:
+        - $ref: '#/components/schemas/Exception'
+      example:
+        type: NotAuthorizedException
+        message: Not authorized
         
