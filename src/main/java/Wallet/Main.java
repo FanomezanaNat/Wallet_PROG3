@@ -1,19 +1,103 @@
 package Wallet;
 
-// Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
-// then press Enter. You can now see whitespace characters in your code.
+import Wallet.DatabaseConfiguration.DatabaseConnection;
+import Wallet.Entity.Account;
+import Wallet.Entity.Currency;
+import Wallet.Entity.Transaction;
+import Wallet.Repository.AccountCrudOperations;
+import Wallet.Repository.CurrencyCrudOperations;
+import Wallet.Repository.TransactionCrudOperations;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.Instant;
+import java.util.List;
+import java.util.UUID;
+
 public class Main {
     public static void main(String[] args) {
-        // Press Alt+Enter with your caret at the highlighted text to see how
-        // IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        DatabaseConnection connectionManager = new DatabaseConnection();
 
-        // Press Shift+F10 or click the green arrow button in the gutter to run the code.
-        for (int i = 1; i <= 5; i++) {
+        try (Connection connection = connectionManager.getConnection()){
+            CurrencyCrudOperations currencyCrudOperations = new CurrencyCrudOperations(connection);
+            if (connection != null){
+                //Find all currencies
+                List<Currency> allCurrencies = currencyCrudOperations.findAll();
+                System.out.println("All Currencies:");
+                for (Currency currency : allCurrencies) {
+                    System.out.println(currency.toString());
+                }
 
-            // Press Shift+F9 to start debugging your code. We have set one breakpoint
-            // for you, but you can always add more by pressing Ctrl+F8.
-            System.out.println("i = " + i);
+                // Creating a new currency
+                Currency newCurrency = new Currency(UUID.fromString("98abfe06-92e3-11ee-b9d1-0242ac120002"), "Yuan");
+                Currency createdCurrency = currencyCrudOperations.save(newCurrency);
+                if (createdCurrency != null) {
+                    System.out.println("New currency created: " + createdCurrency);
+                } else {
+                    System.out.println("Failed to create a new currency.");
+                }
+            }
+
+
+        } catch (SQLException e) {
+            System.err.println("An error occurred while fetching currencies: " + e.getMessage());
+            System.out.println("Failed to retrieve currencies. Please try again later.");
         }
+
+        try (Connection connection = connectionManager.getConnection()){
+            AccountCrudOperations accountCrudOperations = new AccountCrudOperations(connection);
+            if (connection != null){
+                //Find all accounts
+                List<Account> allAccounts = accountCrudOperations.findAll();
+                System.out.println("All Accounts:");
+                for (Account account : allAccounts) {
+                    System.out.println(account.toString());
+                }
+
+                // Creating a new account
+                Account newAccount = new Account(4,UUID.fromString("c68b573c-92e2-11ee-b9d1-0242ac120002"));
+                Account createdAccount = accountCrudOperations.save(newAccount);
+                if (createdAccount != null) {
+                    System.out.println("New account created: " + createdAccount);
+                } else {
+                    System.out.println("Failed to create a new account.");
+                }
+            }
+
+
+        } catch (SQLException e) {
+            System.err.println("An error occurred while fetching accounts: " + e.getMessage());
+            System.out.println("Failed to retrieve accounts. Please try again later.");
+        }
+
+        try (Connection connection = connectionManager.getConnection()){
+            TransactionCrudOperations transactionCrudOperations = new TransactionCrudOperations(connection);
+            if (connection != null){
+                //Find all transactions
+                List<Transaction> allTransactions = transactionCrudOperations.findAll();
+                System.out.println("All Transactions:");
+                for (Transaction transaction : allTransactions) {
+                    System.out.println(transaction.toString());
+                }
+
+                // Creating a new transaction
+                Transaction newTransaction = new Transaction(UUID.fromString("98ac0770-92e3-11ee-b9d1-0242ac120002"), "software, applications, games", Timestamp.from(Instant.parse("2023-12-06T14:03:00.00Z")),15,2);
+                Transaction createdTransaction = transactionCrudOperations.save(newTransaction);
+                if (createdTransaction != null) {
+                    System.out.println("New transaction created: " + createdTransaction);
+                } else {
+                    System.out.println("Failed to create a new transaction.");
+                }
+            }
+
+
+        } catch (SQLException e) {
+            System.err.println("An error occurred while fetching transactions: " + e.getMessage());
+            System.out.println("Failed to retrieve transactions. Please try again later.");
+        }
+
+
+
     }
 }
