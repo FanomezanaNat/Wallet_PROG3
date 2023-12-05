@@ -2,8 +2,9 @@ openapi: '3.0.2'
 info:
   title: Wallet management
   version: '1.0'
+  description: this documentation describes the information about a wallet that we've done 
 servers:
-  - url: https://wallet.com
+  - url: https://wallet.v1.com
 tags:
   - name: "currency"
   - name: "account"
@@ -48,36 +49,7 @@ paths:
           $ref: "#/components/responses/400"
         '500':
           $ref: "#/components/responses/500"
-    put:
-      tags:
-        - "currency"
-      summary:  Update a currency
-      operationId: CrupdateCurrency
-      parameters:
-        - name: id
-          in: query
-          required: true
-          description: ID of the currency to update
-          schema:
-            type: string
-            format: uuid
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/currency"
-      responses:
-        '200':
-          description: Currency updated successfully
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/currency"
-        '400':
-          $ref: "#/components/responses/400"
-        '500':
-          $ref: "#/components/responses/500"
+    
   /account:
     get:
       tags:
@@ -117,35 +89,7 @@ paths:
           $ref: "#/components/responses/400"
         '500':
           $ref: "#/components/responses/500"
-    put:
-      tags:
-        - "account"
-      summary: Update an account
-      operationId: updateAccount
-      parameters:
-        - name: id
-          in: query
-          required: true
-          description: ID of the account to update
-          schema:
-            type: integer
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/account"
-      responses:
-        '200':
-          description: Account updated successfully
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/account"
-        '400':
-          $ref: "#/components/responses/400"
-        '500':
-          $ref: "#/components/responses/500"
+   
   /transaction:
     get:
       tags:
@@ -185,6 +129,69 @@ paths:
         '500':
           $ref: "#/components/responses/500"
 
+    
+  /currency/{id}:
+    put:
+      tags:
+        - "currency"
+      summary:  Update  currency by id
+      operationId: CrupdateCurrency
+      parameters:
+        - name: id
+          in: query
+          required: true
+          description: ID of the currency to update
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/currency"
+      responses:
+        '200':
+          description: Currency updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/currency"
+        '400':
+          $ref: "#/components/responses/400"
+        '500':
+          $ref: "#/components/responses/500"
+  /acount/{id}:
+     put:
+      tags:
+        - "account"
+      summary: Update an account
+      operationId: updateAccount
+      parameters:
+        - name: id
+          in: query
+          required: true
+          description: ID of the account to update
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/account"
+      responses:
+        '200':
+          description: Account updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/account"
+        '400':
+          $ref: "#/components/responses/400"
+        '500':
+          $ref: "#/components/responses/500"
+  /transaction/{id}:
     put:
       tags:
         - "transaction"
@@ -215,7 +222,6 @@ paths:
           $ref: "#/components/responses/400"
         '500':
           $ref: "#/components/responses/500"
-
 
 components:
   schemas:
