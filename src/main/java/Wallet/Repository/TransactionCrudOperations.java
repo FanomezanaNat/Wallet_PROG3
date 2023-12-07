@@ -50,7 +50,9 @@ public class TransactionCrudOperations implements CrudOperations<Transaction>{
 
     @Override
     public Transaction save(Transaction toSave) {
-        String sql = "INSERT INTO transaction(id, label, type, transactiondate, amount, account) values(?,?,?,?,?,?)";
+        String sql = "INSERT INTO transaction(id, label, type, transactiondate, amount, account) values(?,?,?,?,?,?)"+
+                "ON CONFLICT (id) DO UPDATE SET label=EXCLUDED.label, type=EXCLUDED.type, " +
+                "transactionDate=EXCLUDED.transactionDate, amount=EXCLUDED.amount, account=EXCLUDED.account";;
 
         try (PreparedStatement statement = connection.prepareStatement(sql)){
             statement.setObject(1, toSave.getId());

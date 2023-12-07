@@ -70,7 +70,9 @@ public class AccountCrudOperations implements CrudOperations<Account>{
 
     @Override
     public Account save(Account toSave) {
-        String sql = "INSERT INTO account(id, name, balance, updateDate, type, currency) values(?,?,?,?,?,?)";
+        String sql = "INSERT INTO account(id, name, balance, updateDate, type, currency) VALUES(?,?,?,?,?,?) " +
+                "ON CONFLICT (id) DO UPDATE SET name=EXCLUDED.name, balance=EXCLUDED.balance, " +
+                "updateDate=EXCLUDED.updateDate, type=EXCLUDED.type, currency=EXCLUDED.currency";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)){
             statement.setObject(1, toSave.getId());

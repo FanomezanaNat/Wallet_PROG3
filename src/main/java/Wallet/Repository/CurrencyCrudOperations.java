@@ -50,8 +50,8 @@ public class CurrencyCrudOperations implements CrudOperations<Currency>{
 
     @Override
     public Currency save(Currency toSave) {
-        String sql = "INSERT INTO currency(id, name, code) values(?,?,?)";
-
+        String sql = "INSERT INTO currency(id, name, code) values(?,?,?)"+
+                "ON CONFLICT (id) DO UPDATE SET name=EXCLUDED.name, code=EXCLUDED.code;";
         try (PreparedStatement statement = connection.prepareStatement(sql)){
             statement.setObject(1, toSave.getId());
             statement.setString(2, toSave.getName());
