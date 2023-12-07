@@ -10,13 +10,15 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Currency {
     private UUID id;
-    private String type;
+    private String name;
+    private String code;
 
     @Override
     public String toString() {
-        return "Currency: " +
-                "id: " + id +
-                ", type: '" + type + '\'' +
+        return "Currency{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", code='" + code + '\'' +
                 '}';
     }
 }

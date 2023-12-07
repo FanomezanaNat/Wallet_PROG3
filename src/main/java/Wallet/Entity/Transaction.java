@@ -12,19 +12,21 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Transaction {
     private UUID id;
+    private String label;
     private String type;
     private Timestamp transactionDate;
     private int amount;
-    private int idAccount;
+    private UUID account;
 
     @Override
     public String toString() {
         return "Transaction{" +
                 "id=" + id +
+                ", label='" + label + '\'' +
                 ", type='" + type + '\'' +
-                ", transactionDate='" + transactionDate + '\'' +
+                ", transactionDate=" + transactionDate +
                 ", amount=" + amount +
-                ", idAccount=" + idAccount +
+                ", account=" + account +
                 '}';
     }
 }
