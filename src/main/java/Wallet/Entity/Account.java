@@ -82,7 +82,9 @@ public class Account {
 
         return balanceAtGivenTime;
     }
-
-
+    public static double getBalanceAtCurrentTime(Account account){
+        Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+        return getBalanceAtDate(currentTime, account);
+    }
 }
 
