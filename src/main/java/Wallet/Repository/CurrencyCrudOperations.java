@@ -25,7 +25,8 @@ public class CurrencyCrudOperations implements CrudOperations<Currency>{
             while (resultSet.next()) {
                 currencyList.add(new Currency(
                         (UUID) resultSet.getObject("id"),
-                        resultSet.getString("type")
+                        resultSet.getString("name"),
+                        resultSet.getString("code")
                 ));
             }
         }catch (SQLException e){
@@ -49,11 +50,12 @@ public class CurrencyCrudOperations implements CrudOperations<Currency>{
 
     @Override
     public Currency save(Currency toSave) {
-        String sql = "INSERT INTO currency(id, type) values(?,?)";
+        String sql = "INSERT INTO currency(id, name, code) values(?,?,?)";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)){
             statement.setObject(1, toSave.getId());
-            statement.setString(2, toSave.getType());
+            statement.setString(2, toSave.getName());
+            statement.setString(3,toSave.getCode());
 
             int rowAffected = statement.executeUpdate();
             if (rowAffected > 0) {
