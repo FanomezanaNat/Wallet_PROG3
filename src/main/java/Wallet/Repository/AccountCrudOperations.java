@@ -21,7 +21,7 @@ public class AccountCrudOperations implements CrudOperations<Account>{
         List<Account> accountList = new ArrayList<>();
         List<Transaction> transactionList = new ArrayList<>();
 
-        String sql = "SELECT account.id idAccount, account.name AccountName, balance, updatedate, account.type AccountType," +
+        String sql = "SELECT account.id idAccount, account.name AccountName, balance, updatedate, account.type AccountType ,currency , " +
                 "t.id idTransaction, label, t.type TransactionType, transactiondate, amount\n" +
                 "from account\n" +
                 "inner join transaction t on account.id = t.account";
@@ -46,7 +46,7 @@ public class AccountCrudOperations implements CrudOperations<Account>{
                         resultSet.getTimestamp("updatedate"),
                         transactionList,
                         resultSet.getString("AccountType"),
-                        (UUID) resultSet.getObject("idCurrency")
+                        (UUID) resultSet.getObject("currency")
                 ));
             }
         }catch (SQLException e){
