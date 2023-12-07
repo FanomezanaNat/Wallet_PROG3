@@ -3,8 +3,10 @@ package Wallet.Entity;
 import lombok.*;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
 
 @Getter
 @Setter
@@ -31,13 +33,31 @@ public class Account {
 
     @Override
     public String toString() {
-        return "Account:"+
+        return "Account:" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", balance=" + balance +
                 ", updateDate=" + updateDate +
                 ", Transactions=" + Transactions +
                 ", type='" + type + '\'' +
-                ", Currency=" + Currency ;
+                ", Currency=" + Currency;
+    }
+
+    public Account performTransaction(String label, String type, double amount) {
+        Timestamp dateTransaction = new Timestamp(System.currentTimeMillis());
+        Transaction transaction = new Transaction(UUID.randomUUID(), label, type, dateTransaction, amount, this.id);
+
+        if (type.equalsIgnoreCase("debit")) {
+            balance -= amount;
+        } else if (type.equalsIgnoreCase("credit")) {
+            balance += amount;
+        }
+        if (Transactions == null) {
+            Transactions = new ArrayList<>();
+        }
+        Transactions.add(transaction);
+        updateDate = dateTransaction;
+        return this;
     }
 }
+
