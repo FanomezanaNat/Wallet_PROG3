@@ -25,7 +25,7 @@ create table IF NOT EXISTS transaction
     label           varchar(100)                        not null,
     type            varchar(150)                        not null,
     transactionDate timestamp default current_timestamp not null,
-    amount          integer                             not null,
+    amount          double precision                             not null,
     Account         uuid references account (id)
 );
 
