@@ -22,10 +22,11 @@ public class TransactionCrudOperations implements CrudOperations<Transaction>{
             while (resultSet.next()) {
                 transactionList.add(new Transaction(
                         (UUID) resultSet.getObject("id"),
+                        resultSet.getString("label"),
                         resultSet.getString("type"),
                         resultSet.getTimestamp("transactionDate"),
                         resultSet.getInt("amount"),
-                        resultSet.getInt("idAccount")
+                        (UUID) resultSet.getObject("account")
                 ));
             }
         }catch (SQLException e){
@@ -49,14 +50,15 @@ public class TransactionCrudOperations implements CrudOperations<Transaction>{
 
     @Override
     public Transaction save(Transaction toSave) {
-        String sql = "INSERT INTO transaction(id, type, transactiondate, amount, idaccount) values(?,?,?,?,?)";
+        String sql = "INSERT INTO transaction(id, label, type, transactiondate, amount, account) values(?,?,?,?,?,?)";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)){
             statement.setObject(1, toSave.getId());
-            statement.setString(2, toSave.getType());
-            statement.setTimestamp(3, (toSave.getTransactionDate()));
-            statement.setInt(4, toSave.getAmount());
-            statement.setInt(5, toSave.getIdAccount());
+            statement.setString(2, toSave.getLabel());
+            statement.setString(3, toSave.getType());
+            statement.setTimestamp(4, (toSave.getTransactionDate()));
+            statement.setInt(5, toSave.getAmount());
+            statement.setObject(6, toSave.getAccount());
 
             int rowAffected = statement.executeUpdate();
             if (rowAffected > 0) {
