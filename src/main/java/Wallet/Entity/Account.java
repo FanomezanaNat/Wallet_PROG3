@@ -2,6 +2,7 @@ package Wallet.Entity;
 
 import lombok.*;
 
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -56,6 +57,23 @@ public class Account {
     public static double getBalanceAtCurrentTime(Account account) {
         Timestamp currentTime = new Timestamp(System.currentTimeMillis());
         return getBalanceAtDate(currentTime, account);
+    }
+
+    public static List<Double> getBalanceHistory(Account account, Timestamp startDate, Timestamp endDate) {
+        List<Double> balanceHistory = new ArrayList<>();
+        List<Transaction> transactions = account.getTransactions();
+        if (transactions != null) {
+            for (Transaction transaction : transactions) {
+                Timestamp transactionDate = transaction.getTransactionDate();
+                if (transactionDate.after(startDate) && transactionDate.before(endDate)) {
+                    double balanceAtTransaction = getBalanceAtDate(transactionDate, account);
+                    balanceHistory.add(balanceAtTransaction);
+                }
+            }
+
+        }
+
+        return balanceHistory;
     }
 
     @Override
