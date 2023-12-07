@@ -22,6 +22,8 @@ public class Account {
     private String type;
     private UUID Currency;
 
+
+
     public Account(UUID id, String name, double balance, Timestamp updateDate, String type, UUID currency) {
         this.id = id;
         this.name = name;
@@ -59,5 +61,28 @@ public class Account {
         updateDate = dateTransaction;
         return this;
     }
+
+    public static double getBalanceAtDate(Timestamp currentTime, Account account){
+        double balanceAtGivenTime =0.0;
+        List<Transaction> transactions = account.getTransactions();
+
+        if (transactions != null) {
+            for (Transaction transaction:transactions){
+                if(!transaction.getTransactionDate().after(currentTime)){
+                    if (transaction.getType().equalsIgnoreCase("debit")) {
+                        balanceAtGivenTime-= transaction.getAmount();
+
+                    } else if (transaction.getType().equalsIgnoreCase("credit")) {
+                        balanceAtGivenTime+= transaction.getAmount();
+                    }
+                }
+            }
+            
+        }
+
+        return balanceAtGivenTime;
+    }
+
+
 }
 
