@@ -2,6 +2,8 @@ package Wallet.Entity;
 
 import lombok.*;
 
+import java.sql.Timestamp;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -10,14 +12,23 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Account {
-    private int id;
-    private UUID idCurrency;
+    private UUID id;
+    private String name;
+    private double amount;
+    private Timestamp updateDate;
+    private List<Transaction> Transactions;
+    private String type;
+    private UUID Currency;
 
     @Override
     public String toString() {
-        return "Account{" +
+        return "Account:"+
                 "id=" + id +
-                ", idCurrency=" + idCurrency +
-                '}';
+                ", name='" + name + '\'' +
+                ", amount=" + amount +
+                ", updateDate=" + updateDate +
+                ", Transactions=" + Transactions +
+                ", type='" + type + '\'' +
+                ", Currency=" + Currency ;
     }
 }
