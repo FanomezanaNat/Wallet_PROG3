@@ -15,7 +15,7 @@ public class Transaction {
     private String label;
     private String type;
     private Timestamp transactionDate;
-    private int amount;
+    private Double amount;
     private UUID account;
 
     @Override

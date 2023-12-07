@@ -25,7 +25,7 @@ public class TransactionCrudOperations implements CrudOperations<Transaction>{
                         resultSet.getString("label"),
                         resultSet.getString("type"),
                         resultSet.getTimestamp("transactionDate"),
-                        resultSet.getInt("amount"),
+                        resultSet.getDouble("amount"),
                         (UUID) resultSet.getObject("account")
                 ));
             }
@@ -57,7 +57,7 @@ public class TransactionCrudOperations implements CrudOperations<Transaction>{
             statement.setString(2, toSave.getLabel());
             statement.setString(3, toSave.getType());
             statement.setTimestamp(4, (toSave.getTransactionDate()));
-            statement.setInt(5, toSave.getAmount());
+            statement.setDouble(5, toSave.getAmount());
             statement.setObject(6, toSave.getAccount());
 
             int rowAffected = statement.executeUpdate();
