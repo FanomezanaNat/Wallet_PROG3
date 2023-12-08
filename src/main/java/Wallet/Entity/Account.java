@@ -1,8 +1,9 @@
 package Wallet.Entity;
 
+import Wallet.DatabaseConfiguration.DatabaseConnection;
+import Wallet.Repository.CurrencyValueCrudOperations;
 import lombok.*;
 
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -103,6 +104,36 @@ public class Account {
         Transactions.add(transaction);
         updateDate = dateTransaction;
         return this;
+    }
+
+    public void transferMoney(Account destinationAccount, double amount) {
+
+        if (!this.getId().equals(destinationAccount.getId()))
+            if (this.getCurrency().equals(destinationAccount.getCurrency())) {
+                performTransaction("Transfer to " + destinationAccount.getName(), "debit", amount);
+                destinationAccount.performTransaction("Transfer from " + this.getName(), "credit", amount);
+
+
+                TransferHistory transferHistory = new TransferHistory(UUID.randomUUID(),
+                        getTransactions().get(getTransactions().size() - 1).getId(),
+                        destinationAccount.getTransactions().get(destinationAccount.getTransactions().size() - 1).getId(),
+                        new Timestamp(System.currentTimeMillis()));
+
+            } else {
+                DatabaseConnection databaseConnection = new DatabaseConnection();
+                CurrencyValueCrudOperations currencyValueCrudOperations = new CurrencyValueCrudOperations(databaseConnection.getConnection());
+                CurrencyValue currencyValue = currencyValueCrudOperations.findByDate(new Timestamp(System.currentTimeMillis()));
+                double convertedAmount = amount * currencyValue.getAmount();
+
+                performTransaction("Transfer to " + destinationAccount.getName(), "debit", amount);
+                destinationAccount.performTransaction("Transfer from " + this.getName(), "credit", convertedAmount);
+
+
+                TransferHistory transferHistory = new TransferHistory(UUID.randomUUID(),
+                        getTransactions().get(getTransactions().size() - 1).getId(),
+                        destinationAccount.getTransactions().get(destinationAccount.getTransactions().size() - 1).getId(),
+                        new Timestamp(System.currentTimeMillis()));
+            }
     }
 
 
