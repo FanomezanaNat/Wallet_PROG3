@@ -136,6 +136,36 @@ public class Account {
             }
     }
 
+    public double getBalanceAtDateWithExchange(Timestamp currentTime, Account account) {
+        double balanceAtGivenTime = 0.0;
+        List<Transaction> transactions = account.getTransactions();
+
+        if (transactions != null) {
+            for (Transaction transaction : transactions) {
+                if (!transaction.getTransactionDate().after(currentTime)) {
+                    double amount = transaction.getAmount();
+                    if (transaction.getType().equalsIgnoreCase("debit")) {
+                        DatabaseConnection databaseConnection = new DatabaseConnection();
+                        CurrencyValueCrudOperations currencyValueCrudOperations = new CurrencyValueCrudOperations(databaseConnection.getConnection());
+                        CurrencyValue currencyValue =  currencyValueCrudOperations.findByDate(currentTime);
+                                    amount *= currencyValue.getAmount();
+
+                        balanceAtGivenTime -= amount;
+                    } else if (transaction.getType().equalsIgnoreCase("credit")) {
+                        DatabaseConnection databaseConnection = new DatabaseConnection();
+                        CurrencyValueCrudOperations currencyValueCrudOperations = new CurrencyValueCrudOperations(databaseConnection.getConnection());
+                        CurrencyValue currencyValue =  currencyValueCrudOperations.findByDate(currentTime);
+                                 amount *= currencyValue.getAmount();
+
+                        balanceAtGivenTime += amount;
+                    }
+                }
+            }
+        }
+
+        return balanceAtGivenTime;
+    }
+
 
 }
 
