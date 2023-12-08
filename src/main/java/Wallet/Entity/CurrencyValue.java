@@ -14,7 +14,7 @@ public class CurrencyValue {
     private UUID id;
     private UUID sourceCurrencyId;
     private UUID destinationCurrencyId;
-    private double value;
+    private double amount;
     private Timestamp dateEffect;
 
     @Override
@@ -23,7 +23,7 @@ public class CurrencyValue {
                 "id=" + id +
                 ", sourceCurrencyId=" + sourceCurrencyId +
                 ", destinationCurrencyId=" + destinationCurrencyId +
-                ", value=" + value +
+                ", amount=" + amount +
                 ", dateEffect=" + dateEffect +
                 '}';
     }
