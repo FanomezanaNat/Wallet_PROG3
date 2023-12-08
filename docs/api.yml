@@ -233,13 +233,25 @@ components:
           format: uuid
         type:
           type: string
+        code:
+          type: string
     account:
       type: object
       properties:
         id:
-          type: integer
-        idCurrency: 
           type: string
+          format: uuid
+        name: 
+          type: string
+        balance:
+          type: integer
+        updateDate:
+          type: string
+          format: date
+        type: 
+          type: string
+        currency: 
+          type: string  
           format: uuid
     transaction:
       type: object
@@ -249,13 +261,16 @@ components:
           format: uuid
         type:
           type: string
+        label:
+          type: string
         transactionDate:
           type: string
           format: datetime
         amount:
           type: integer
-        idAccount:
-          type: integer
+        Account:
+          type: string
+          format: uuid
     Exception:
           type: object
           properties:
