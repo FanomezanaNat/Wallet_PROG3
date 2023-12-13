@@ -16,6 +16,12 @@ public class TransferHistory {
     private UUID creditTransactionId;
     private Timestamp transferDate;
 
+    public TransferHistory(UUID debitTransactionId, UUID creditTransactionId, Timestamp transferDate) {
+        this.debitTransactionId = debitTransactionId;
+        this.creditTransactionId = creditTransactionId;
+        this.transferDate = transferDate;
+    }
+
     @Override
     public String toString() {
         return "TransferHistory{" +
