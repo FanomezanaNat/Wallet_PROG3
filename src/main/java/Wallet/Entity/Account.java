@@ -1,5 +1,6 @@
 package Wallet.Entity;
 
+import Wallet.DAO.TransferHistoryDAO;
 import Wallet.DatabaseConfiguration.DatabaseConnection;
 import Wallet.DAO.CurrencyValueDAO;
 import lombok.*;
@@ -107,6 +108,9 @@ public class Account {
     }
 
     public void transferMoney(Account destinationAccount, double amount) {
+        DatabaseConnection databaseConnection = new DatabaseConnection();
+        TransferHistoryDAO transferHistoryDAO = new TransferHistoryDAO(databaseConnection.getConnection());
+
 
         if (!getId().equals(destinationAccount.getId()))
             if (getCurrency().equals(destinationAccount.getCurrency())) {
@@ -118,9 +122,10 @@ public class Account {
                         getTransactions().get(getTransactions().size() - 1).getId(),
                         destinationAccount.getTransactions().get(destinationAccount.getTransactions().size() - 1).getId(),
                         new Timestamp(System.currentTimeMillis()));
+                transferHistoryDAO.save(transferHistory);
+
 
             } else {
-                DatabaseConnection databaseConnection = new DatabaseConnection();
                 CurrencyValueDAO currencyValueDAO = new CurrencyValueDAO(databaseConnection.getConnection());
                 CurrencyValue currencyValue = currencyValueDAO.findByDate(new Timestamp(System.currentTimeMillis()));
                 double convertedAmount = amount * currencyValue.getAmount();
@@ -133,29 +138,31 @@ public class Account {
                         getTransactions().get(getTransactions().size() - 1).getId(),
                         destinationAccount.getTransactions().get(destinationAccount.getTransactions().size() - 1).getId(),
                         new Timestamp(System.currentTimeMillis()));
+                transferHistoryDAO.save(transferHistory);
+
+
             }
     }
 
     public double getBalanceAtDateWithExchange(Timestamp currentTime, Account account) {
+        DatabaseConnection databaseConnection = new DatabaseConnection();
+        CurrencyValueDAO currencyValueDAO = new CurrencyValueDAO(databaseConnection.getConnection());
+
+
         double balanceAtGivenTime = 0.0;
         List<Transaction> transactions = account.getTransactions();
-
         if (transactions != null) {
             for (Transaction transaction : transactions) {
                 if (!transaction.getTransactionDate().after(currentTime)) {
                     double amount = transaction.getAmount();
                     if (transaction.getType().equalsIgnoreCase("debit")) {
-                        DatabaseConnection databaseConnection = new DatabaseConnection();
-                        CurrencyValueDAO currencyValueDAO = new CurrencyValueDAO(databaseConnection.getConnection());
-                        CurrencyValue currencyValue =  currencyValueDAO.findByDate(currentTime);
-                                    amount *= currencyValue.getAmount();
+                        CurrencyValue currencyValue = currencyValueDAO.findByDate(currentTime);
+                        amount *= currencyValue.getAmount();
 
                         balanceAtGivenTime -= amount;
                     } else if (transaction.getType().equalsIgnoreCase("credit")) {
-                        DatabaseConnection databaseConnection = new DatabaseConnection();
-                        CurrencyValueDAO currencyValueDAO = new CurrencyValueDAO(databaseConnection.getConnection());
-                        CurrencyValue currencyValue =  currencyValueDAO.findByDate(currentTime);
-                                 amount *= currencyValue.getAmount();
+                        CurrencyValue currencyValue = currencyValueDAO.findByDate(currentTime);
+                        amount *= currencyValue.getAmount();
 
                         balanceAtGivenTime += amount;
                     }
