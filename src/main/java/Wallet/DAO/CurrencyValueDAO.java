@@ -1,12 +1,9 @@
-package Wallet.Repository;
+package Wallet.DAO;
 
-import Wallet.Entity.Currency;
 import Wallet.Entity.CurrencyValue;
 import lombok.AllArgsConstructor;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 @AllArgsConstructor

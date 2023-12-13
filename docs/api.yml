@@ -1,7 +1,7 @@
 openapi: '3.0.2'
 info:
   title: Wallet management
-  version: '1.0'
+  version: '1.1'
   description: this documentation describes the information about a wallet that we've done 
 servers:
   - url: https://wallet.v1.com

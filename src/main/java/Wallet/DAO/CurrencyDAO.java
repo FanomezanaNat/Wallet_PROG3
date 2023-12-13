@@ -1,4 +1,4 @@
-package Wallet.Repository;
+package Wallet.DAO;
 
 import Wallet.Entity.Currency;
 import lombok.AllArgsConstructor;

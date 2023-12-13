@@ -1,4 +1,4 @@
-package Wallet.Repository;
+package Wallet.DAO;
 
 import Wallet.Entity.Account;
 import Wallet.Entity.Transaction;
