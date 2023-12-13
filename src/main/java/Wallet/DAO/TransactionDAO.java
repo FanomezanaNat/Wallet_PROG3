@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 @AllArgsConstructor
-public class TransactionCrudOperations implements CrudOperations<Transaction>{
+public class TransactionDAO implements CrudOperations<Transaction>{
     private Connection connection;
 
     @Override

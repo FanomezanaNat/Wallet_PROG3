@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 @AllArgsConstructor
-public class AccountCrudOperations implements CrudOperations<Account>{
+public class AccountDAO implements CrudOperations<Account>{
     private Connection connection;
 
     @Override

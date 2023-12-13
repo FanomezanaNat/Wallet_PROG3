@@ -1,7 +1,7 @@
 package Wallet.Entity;
 
 import Wallet.DatabaseConfiguration.DatabaseConnection;
-import Wallet.Repository.CurrencyValueCrudOperations;
+import Wallet.DAO.CurrencyValueDAO;
 import lombok.*;
 
 import java.sql.Timestamp;
@@ -108,8 +108,8 @@ public class Account {
 
     public void transferMoney(Account destinationAccount, double amount) {
 
-        if (!this.getId().equals(destinationAccount.getId()))
-            if (this.getCurrency().equals(destinationAccount.getCurrency())) {
+        if (!getId().equals(destinationAccount.getId()))
+            if (getCurrency().equals(destinationAccount.getCurrency())) {
                 performTransaction("Transfer to " + destinationAccount.getName(), "debit", amount);
                 destinationAccount.performTransaction("Transfer from " + this.getName(), "credit", amount);
 
@@ -121,8 +121,8 @@ public class Account {
 
             } else {
                 DatabaseConnection databaseConnection = new DatabaseConnection();
-                CurrencyValueCrudOperations currencyValueCrudOperations = new CurrencyValueCrudOperations(databaseConnection.getConnection());
-                CurrencyValue currencyValue = currencyValueCrudOperations.findByDate(new Timestamp(System.currentTimeMillis()));
+                CurrencyValueDAO currencyValueDAO = new CurrencyValueDAO(databaseConnection.getConnection());
+                CurrencyValue currencyValue = currencyValueDAO.findByDate(new Timestamp(System.currentTimeMillis()));
                 double convertedAmount = amount * currencyValue.getAmount();
 
                 performTransaction("Transfer to " + destinationAccount.getName(), "debit", amount);
@@ -146,15 +146,15 @@ public class Account {
                     double amount = transaction.getAmount();
                     if (transaction.getType().equalsIgnoreCase("debit")) {
                         DatabaseConnection databaseConnection = new DatabaseConnection();
-                        CurrencyValueCrudOperations currencyValueCrudOperations = new CurrencyValueCrudOperations(databaseConnection.getConnection());
-                        CurrencyValue currencyValue =  currencyValueCrudOperations.findByDate(currentTime);
+                        CurrencyValueDAO currencyValueDAO = new CurrencyValueDAO(databaseConnection.getConnection());
+                        CurrencyValue currencyValue =  currencyValueDAO.findByDate(currentTime);
                                     amount *= currencyValue.getAmount();
 
                         balanceAtGivenTime -= amount;
                     } else if (transaction.getType().equalsIgnoreCase("credit")) {
                         DatabaseConnection databaseConnection = new DatabaseConnection();
-                        CurrencyValueCrudOperations currencyValueCrudOperations = new CurrencyValueCrudOperations(databaseConnection.getConnection());
-                        CurrencyValue currencyValue =  currencyValueCrudOperations.findByDate(currentTime);
+                        CurrencyValueDAO currencyValueDAO = new CurrencyValueDAO(databaseConnection.getConnection());
+                        CurrencyValue currencyValue =  currencyValueDAO.findByDate(currentTime);
                                  amount *= currencyValue.getAmount();
 
                         balanceAtGivenTime += amount;

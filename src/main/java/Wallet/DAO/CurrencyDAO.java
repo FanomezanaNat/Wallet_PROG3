@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.UUID;
 
 @AllArgsConstructor
-public class CurrencyCrudOperations implements CrudOperations<Currency>{
+public class CurrencyDAO implements CrudOperations<Currency>{
     private Connection connection;
 
     @Override

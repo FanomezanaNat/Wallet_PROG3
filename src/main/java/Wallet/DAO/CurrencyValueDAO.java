@@ -7,7 +7,7 @@ import java.sql.*;
 import java.util.UUID;
 
 @AllArgsConstructor
-public class CurrencyValueCrudOperations {
+public class CurrencyValueDAO {
     private Connection connection;
 
     public CurrencyValue findByDate(Timestamp date) {
