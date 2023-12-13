@@ -10,6 +10,7 @@ import java.util.UUID;
 public class CurrencyValueDAO {
     private Connection connection;
 
+
     public CurrencyValue findByDate(Timestamp date) {
         String sql = "SELECT * FROM CurrencyValue WHERE sourcecurrencyid = '98ac0590-92e3-11ee-b9d1-0242ac120002' " +
                 "AND destinationcurrencyid = '98abfe06-92e3-11ee-b9d1-0242ac120002' " +
