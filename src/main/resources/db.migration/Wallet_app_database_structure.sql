@@ -18,14 +18,25 @@ create table IF NOT EXISTS account
     Currency   uuid references currency (id)
 );
 
+create table IF NOT EXISTS type
+(
+    id   uuid primary key,
+    name varchar(100) not null
+);
+
+create table IF NOT EXISTS category
+(
+    id   uuid primary key,
+    name varchar(250) unique       not null,
+    type uuid references type (id) not null
+);
 
 create table IF NOT EXISTS transaction
 (
     id              uuid primary key,
-    label           varchar(100)                        not null,
-    type            varchar(150)                        not null,
     transactionDate timestamp default current_timestamp not null,
     amount          double precision                    not null,
+    category uuid references category (id) not null,
     Account         uuid references account (id)
 );
 
@@ -45,3 +56,4 @@ create table IF NOT EXISTS currencyValue
     amount                double precision              not null,
     dateEffect            timestamp                     not null
 );
+
