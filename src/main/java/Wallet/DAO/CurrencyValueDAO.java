@@ -36,8 +36,8 @@ public class CurrencyValueDAO {
         return null;
     }
 
-    public Double findAverageCurrencyByDate(Date date) {
-        String sql = "SELECT avg(amount) averageAmount, date(dateeffect) \"date\" FROM CurrencyValue " +
+    public Double findAverageCurrencyByDate(String parameter, Date date) {
+        String sql = "SELECT"+ parameter +"(amount) averageAmount, date(dateeffect) \"date\" FROM CurrencyValue " +
                 "WHERE sourcecurrencyid = '98ac0590-92e3-11ee-b9d1-0242ac120002' " +
                 "AND destinationcurrencyid = '98abfe06-92e3-11ee-b9d1-0242ac120002' " +
                 "AND date(dateeffect) = ? group by \"date\"";
