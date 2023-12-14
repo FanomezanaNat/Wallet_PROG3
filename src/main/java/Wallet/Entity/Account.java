@@ -1,5 +1,6 @@
 package Wallet.Entity;
 
+import Wallet.DAO.TransactionDAO;
 import Wallet.DAO.TransferHistoryDAO;
 import Wallet.DatabaseConfiguration.DatabaseConnection;
 import Wallet.DAO.CurrencyValueDAO;
@@ -36,16 +37,18 @@ public class Account {
     }
 
     public static double getBalanceAtDate(Timestamp currentTime, Account account) {
+        DatabaseConnection databaseConnection = new DatabaseConnection();
         double balanceAtGivenTime = 0.0;
         List<Transaction> transactions = account.getTransactions();
+        TransactionDAO transactionDAO = new TransactionDAO(databaseConnection.getConnection());
 
         if (transactions != null) {
             for (Transaction transaction : transactions) {
                 if (!transaction.getTransactionDate().after(currentTime)) {
-                    if (transaction.getType().equalsIgnoreCase("debit")) {
+                    if (transactionDAO.findTypeById(transaction.getId()).equalsIgnoreCase("debit")) {
                         balanceAtGivenTime -= transaction.getAmount();
 
-                    } else if (transaction.getType().equalsIgnoreCase("credit")) {
+                    } else if (transactionDAO.findTypeById(transaction.getId()).equalsIgnoreCase("credit")) {
                         balanceAtGivenTime += transaction.getAmount();
                     }
                 }
@@ -90,13 +93,18 @@ public class Account {
                 ", Currency=" + Currency;
     }
 
-    public Account performTransaction(String label, String type, double amount) {
-        Timestamp dateTransaction = new Timestamp(System.currentTimeMillis());
-        Transaction transaction = new Transaction(UUID.randomUUID(), label, type, dateTransaction, amount, this.id);
+    public Account performTransaction(UUID category, double amount) {
+        DatabaseConnection databaseConnection = new DatabaseConnection();
+        TransactionDAO transactionDAO = new TransactionDAO(databaseConnection.getConnection());
 
-        if (type.equalsIgnoreCase("debit")) {
+        Timestamp dateTransaction = new Timestamp(System.currentTimeMillis());
+        Transaction transaction = new Transaction(UUID.randomUUID(), dateTransaction, amount, category, this.id);
+
+        transactionDAO.save(transaction);
+
+        if (transactionDAO.findTypeById(transaction.getId()).equalsIgnoreCase("debit")) {
             balance -= amount;
-        } else if (type.equalsIgnoreCase("credit")) {
+        } else if (transactionDAO.findTypeById(transaction.getId()).equalsIgnoreCase("credit")) {
             balance += amount;
         }
         if (Transactions == null) {
@@ -107,17 +115,15 @@ public class Account {
         return this;
     }
 
-    public void transferMoney(Account destinationAccount, double amount) {
+    public void transferMoney(Account destinationAccount, double amount, UUID category) {
         DatabaseConnection databaseConnection = new DatabaseConnection();
         TransferHistoryDAO transferHistoryDAO = new TransferHistoryDAO(databaseConnection.getConnection());
         CurrencyValueDAO currencyValueDAO = new CurrencyValueDAO(databaseConnection.getConnection());
 
-
-
         if (!getId().equals(destinationAccount.getId()))
             if (getCurrency().equals(destinationAccount.getCurrency())) {
-                performTransaction("Transfer to " + destinationAccount.getName(), "debit", amount);
-                destinationAccount.performTransaction("Transfer from " + this.getName(), "credit", amount);
+                performTransaction(category, amount);
+                destinationAccount.performTransaction(category,amount);
 
 
                 TransferHistory transferHistory = new TransferHistory(UUID.randomUUID(),
@@ -131,8 +137,8 @@ public class Account {
                 CurrencyValue currencyValue = currencyValueDAO.findByDate(new Timestamp(System.currentTimeMillis()));
                 double convertedAmount = amount * currencyValue.getAmount();
 
-                performTransaction("Transfer to " + destinationAccount.getName(), "debit", amount);
-                destinationAccount.performTransaction("Transfer from " + this.getName(), "credit", convertedAmount);
+                performTransaction(category, amount);
+                destinationAccount.performTransaction(category, convertedAmount);
 
 
                 TransferHistory transferHistory = new TransferHistory(UUID.randomUUID(),
@@ -148,7 +154,7 @@ public class Account {
     public double getBalanceAtDateWithExchange(Timestamp currentTime, Account account) {
         DatabaseConnection databaseConnection = new DatabaseConnection();
         CurrencyValueDAO currencyValueDAO = new CurrencyValueDAO(databaseConnection.getConnection());
-
+        TransactionDAO transactionDAO = new TransactionDAO(databaseConnection.getConnection());
 
         double balanceAtGivenTime = 0.0;
         List<Transaction> transactions = account.getTransactions();
@@ -156,12 +162,12 @@ public class Account {
             for (Transaction transaction : transactions) {
                 if (!transaction.getTransactionDate().after(currentTime)) {
                     double amount = transaction.getAmount();
-                    if (transaction.getType().equalsIgnoreCase("debit")) {
+                    if (transactionDAO.findTypeById(transaction.getId()).equalsIgnoreCase("debit")) {
                         CurrencyValue currencyValue = currencyValueDAO.findByDate(currentTime);
                         amount *= currencyValue.getAmount();
 
                         balanceAtGivenTime -= amount;
-                    } else if (transaction.getType().equalsIgnoreCase("credit")) {
+                    } else if (transactionDAO.findTypeById(transaction.getId()).equalsIgnoreCase("credit")) {
                         CurrencyValue currencyValue = currencyValueDAO.findByDate(currentTime);
                         amount *= currencyValue.getAmount();
 
