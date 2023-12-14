@@ -22,10 +22,9 @@ public class TransactionDAO implements CrudOperations<Transaction>{
             while (resultSet.next()) {
                 transactionList.add(new Transaction(
                         (UUID) resultSet.getObject("id"),
-                        resultSet.getString("label"),
-                        resultSet.getString("type"),
                         resultSet.getTimestamp("transactionDate"),
                         resultSet.getDouble("amount"),
+                        (UUID) resultSet.getObject("category"),
                         (UUID) resultSet.getObject("account")
                 ));
             }
@@ -50,17 +49,16 @@ public class TransactionDAO implements CrudOperations<Transaction>{
 
     @Override
     public Transaction save(Transaction toSave) {
-        String sql = "INSERT INTO transaction(id, label, type, transactiondate, amount, account) values(?,?,?,?,?,?)"+
-                "ON CONFLICT (id) DO UPDATE SET label=EXCLUDED.label, type=EXCLUDED.type, " +
+        String sql = "INSERT INTO transaction(id, transactiondate, amount, category,account) values(?,?,?,?,?)"+
+                "ON CONFLICT (id) DO UPDATE SET category=EXCLUDED.category, " +
                 "transactionDate=EXCLUDED.transactionDate, amount=EXCLUDED.amount, account=EXCLUDED.account";;
 
         try (PreparedStatement statement = connection.prepareStatement(sql)){
             statement.setObject(1, toSave.getId());
-            statement.setString(2, toSave.getLabel());
-            statement.setString(3, toSave.getType());
-            statement.setTimestamp(4, (toSave.getTransactionDate()));
-            statement.setDouble(5, toSave.getAmount());
-            statement.setObject(6, toSave.getAccount());
+            statement.setTimestamp(2, (toSave.getTransactionDate()));
+            statement.setDouble(3, toSave.getAmount());
+            statement.setObject(4, toSave.getCategory());
+            statement.setObject(5, toSave.getAccount());
 
             int rowAffected = statement.executeUpdate();
             if (rowAffected > 0) {
