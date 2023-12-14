@@ -36,7 +36,7 @@ public class CurrencyValueDAO {
         return null;
     }
 
-    public Double findAverageCurrencyByDate(String parameter, Date date) {
+    public Double findCurrencyByDate(String parameter, Date date) {
         String sql;
         if (parameter.equals("median")){
             sql = "SELECT percentile_cont(0.5) WITHIN GROUP ( ORDER BY amount ) median_amount, " +
