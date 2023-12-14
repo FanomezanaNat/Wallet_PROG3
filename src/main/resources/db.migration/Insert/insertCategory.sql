@@ -10,4 +10,6 @@ values ('98ac1b3e-92e3-11ee-b9d1-0242ac120002', 'food and drinks', '98ac1d14-92e
        ('98ac1b3e-92e3-11ee-b9d1-0242ac120010', 'investments', '98ac1d14-92e3-11ee-b9d1-0242ac120004'),
        ('98ac1b3e-92e3-11ee-b9d1-0242ac120011', 'income', '98ac1d14-92e3-11ee-b9d1-0242ac120002'),
        ('98ac1b3e-92e3-11ee-b9d1-0242ac120012', 'salary', '98ac1d14-92e3-11ee-b9d1-0242ac120002'),
-       ('98ac1b3e-92e3-11ee-b9d1-0242ac120013', 'loans', '98ac1d14-92e3-11ee-b9d1-0242ac120004');
+       ('98ac1b3e-92e3-11ee-b9d1-0242ac120013', 'loans', '98ac1d14-92e3-11ee-b9d1-0242ac120004')
+ON CONFLICT (id) DO UPDATE SET name = excluded.name,
+                               type = excluded.type;
