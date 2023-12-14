@@ -51,7 +51,7 @@ public class TransactionDAO implements CrudOperations<Transaction>{
     public Transaction save(Transaction toSave) {
         String sql = "INSERT INTO transaction(id, transactiondate, amount, category,account) values(?,?,?,?,?)"+
                 "ON CONFLICT (id) DO UPDATE SET category=EXCLUDED.category, " +
-                "transactionDate=EXCLUDED.transactionDate, amount=EXCLUDED.amount, account=EXCLUDED.account";;
+                "transactionDate=EXCLUDED.transactionDate, amount=EXCLUDED.amount, account=EXCLUDED.account";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)){
             statement.setObject(1, toSave.getId());
@@ -69,5 +69,24 @@ public class TransactionDAO implements CrudOperations<Transaction>{
             e.printStackTrace();
         }
         return null;
+    }
+
+    public String findTypeById(UUID id){
+        String sql = "select type.name from type " +
+                "INNER JOIN category c on type.id = c.type " +
+                "INNER JOIN transaction t on c.id = t.category " +
+                "WHERE t.id = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(sql)){
+            statement.setObject(1, id);
+
+            ResultSet resultSet = statement.executeQuery();
+            return resultSet.getString("name");
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+
     }
 }
