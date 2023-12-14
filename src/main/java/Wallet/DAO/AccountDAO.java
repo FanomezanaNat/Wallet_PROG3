@@ -22,7 +22,7 @@ public class AccountDAO implements CrudOperations<Account>{
         List<Transaction> transactionList = new ArrayList<>();
 
         String sql = "SELECT account.id idAccount, account.name AccountName, balance, updatedate, account.type AccountType ,currency , " +
-                "t.id idTransaction, label, t.type TransactionType, transactiondate, amount\n" +
+                "t.id idTransaction, category, transactiondate, amount\n" +
                 "from account\n" +
                 "inner join transaction t on account.id = t.account";
 
@@ -32,10 +32,9 @@ public class AccountDAO implements CrudOperations<Account>{
 
                 transactionList.add(new Transaction(
                         (UUID) resultSet.getObject("idTransaction"),
-                        resultSet.getString("label"),
-                        resultSet.getString("TransactionType"),
                         resultSet.getTimestamp("transactiondate"),
                         resultSet.getDouble("amount"),
+                        (UUID) resultSet.getObject("category"),
                         (UUID) resultSet.getObject("idAccount")
                 ));
 
