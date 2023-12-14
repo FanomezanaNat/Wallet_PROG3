@@ -110,6 +110,8 @@ public class Account {
     public void transferMoney(Account destinationAccount, double amount) {
         DatabaseConnection databaseConnection = new DatabaseConnection();
         TransferHistoryDAO transferHistoryDAO = new TransferHistoryDAO(databaseConnection.getConnection());
+        CurrencyValueDAO currencyValueDAO = new CurrencyValueDAO(databaseConnection.getConnection());
+
 
 
         if (!getId().equals(destinationAccount.getId()))
@@ -126,7 +128,6 @@ public class Account {
 
 
             } else {
-                CurrencyValueDAO currencyValueDAO = new CurrencyValueDAO(databaseConnection.getConnection());
                 CurrencyValue currencyValue = currencyValueDAO.findByDate(new Timestamp(System.currentTimeMillis()));
                 double convertedAmount = amount * currencyValue.getAmount();
 
