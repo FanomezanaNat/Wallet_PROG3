@@ -37,10 +37,21 @@ public class CurrencyValueDAO {
     }
 
     public Double findAverageCurrencyByDate(String parameter, Date date) {
-        String sql = "SELECT"+ parameter +"(amount) averageAmount, date(dateeffect) \"date\" FROM CurrencyValue " +
-                "WHERE sourcecurrencyid = '98ac0590-92e3-11ee-b9d1-0242ac120002' " +
-                "AND destinationcurrencyid = '98abfe06-92e3-11ee-b9d1-0242ac120002' " +
-                "AND date(dateeffect) = ? group by \"date\"";
+        String sql;
+        if (parameter.equals("median")){
+            sql = "SELECT percentile_cont(0.5) WITHIN GROUP ( ORDER BY amount ) median_amount, " +
+                    "date(dateeffect) \"date\" FROM CurrencyValue " +
+                    "WHERE sourcecurrencyid = '98ac0590-92e3-11ee-b9d1-0242ac120002' " +
+                    "AND destinationcurrencyid = '98abfe06-92e3-11ee-b9d1-0242ac120002' " +
+                    "AND date(dateeffect) = ? group by \"date\"";
+        }
+        else {
+            sql = "SELECT"+ parameter +"(amount) "+parameter+"Amount, date(dateeffect) \"date\" FROM CurrencyValue " +
+                    "WHERE sourcecurrencyid = '98ac0590-92e3-11ee-b9d1-0242ac120002' " +
+                    "AND destinationcurrencyid = '98abfe06-92e3-11ee-b9d1-0242ac120002' " +
+                    "AND date(dateeffect) = ? group by \"date\"";
+        }
+
 
 
         try (PreparedStatement statement = connection.prepareStatement(sql)){
