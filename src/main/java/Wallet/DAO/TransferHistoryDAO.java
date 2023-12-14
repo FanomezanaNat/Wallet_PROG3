@@ -17,7 +17,7 @@ public class TransferHistoryDAO implements CrudOperations<TransferHistory> {
     @Override
     public List<TransferHistory> findAll() {
         List<TransferHistory> transferHistoryList = new ArrayList<>();
-        String sql = "SELECT * FROM tranferHistory";
+        String sql = "SELECT * FROM transferHistory";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             ResultSet resultSet = statement.executeQuery();
@@ -53,7 +53,7 @@ public class TransferHistoryDAO implements CrudOperations<TransferHistory> {
     @Override
     public TransferHistory save(TransferHistory toSave) {
         String sql = "INSERT INTO transferHistory (id,debitTransactionId,creditTransactionId,transferDate)values(?,?,?,?)" +
-                "ON CONFLICT (id) DO UPDATE set debitTransactionId= EXCLUDED.debitTransactionId, creditTransactionId=EXCLUDED.crediTransactionId" +
+                "ON CONFLICT (id) DO UPDATE set debitTransactionId= EXCLUDED.debitTransactionId, creditTransactionId=EXCLUDED.creditTransactionId," +
                 "transferDate=EXCLUDED.transferDate";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setObject(1, toSave.getId());
