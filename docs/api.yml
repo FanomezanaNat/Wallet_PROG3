@@ -386,6 +386,43 @@ paths:
           $ref: "#/components/responses/400"
         '500':
           $ref: "#/components/responses/500"
+  paths:
+  /account/{accountId}/balance/exchange:
+    get:
+      tags:
+        - "account"
+      summary: Get account balance at a specific date with currency exchange
+      operationId: getBalanceAtDateWithExchange
+      parameters:
+        - name: accountId
+          in: path
+          required: true
+          description: ID of the account
+          schema:
+            type: string
+            format: uuid
+        - name: date
+          in: query
+          required: true
+          description: Date for the account balance
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: Successfully retrieved account balance at date with currency exchange
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  balance:
+                    type: number
+        '400':
+          $ref: "#/components/responses/400"
+        '500':
+          $ref: "#/components/responses/500"
+
 components:
   schemas:
     currency:
