@@ -1,5 +1,6 @@
 package Wallet.DAO;
 
+import Wallet.Entity.MoneyFlow;
 import Wallet.Entity.Transaction;
 import lombok.AllArgsConstructor;
 
@@ -81,7 +82,9 @@ public class TransactionDAO implements CrudOperations<Transaction>{
             statement.setObject(1, id);
 
             ResultSet resultSet = statement.executeQuery();
-            return resultSet.getString("name");
+            if (resultSet.next()){
+                return resultSet.getString("name");
+            }
 
         }catch (SQLException e){
             e.printStackTrace();
