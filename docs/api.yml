@@ -481,6 +481,24 @@ components:
         amount:
           type: number
           format: double
+    currencyValue:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        sourceCurrencyId:
+          type: string
+          format: uuid
+        destinationCurrencyId:
+          type: string
+          format: uuid
+        amount:
+          type: number
+          format: double
+        dateEffect:
+          type: string
+          format: date-time
     Exception:
           type: object
           properties:
