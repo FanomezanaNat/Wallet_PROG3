@@ -1,7 +1,7 @@
-openapi: '3.4.1'
+openapi: '3.0.3'
 info:
   title: Wallet management
-  version: '1.1'
+  version: '4.1'
   description: this documentation describes the information about a wallet that we've done 
 servers:
   - url: https://wallet.v1.com
@@ -138,7 +138,7 @@ paths:
       operationId: CrupdateCurrency
       parameters:
         - name: id
-          in: query
+          in: path
           required: true
           description: ID of the currency to update
           schema:
@@ -169,7 +169,7 @@ paths:
       operationId: updateAccount
       parameters:
         - name: id
-          in: query
+          in: path
           required: true
           description: ID of the account to update
           schema:
@@ -199,7 +199,7 @@ paths:
       operationId: updateTransaction
       parameters:
         - name: id
-          in: query
+          in: path
           required: true
           description: ID of the transaction to update
           schema:
@@ -451,24 +451,6 @@ components:
           type: string
         currency: 
           type: string  
-          format: uuid
-   
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-        type:
-          type: string
-        label:
-          type: string
-        transactionDate:
-          type: string
-          format: datetime
-        amount:
-          type: integer
-        Account:
-          type: string
           format: uuid
     transaction:
       type: object

@@ -1,6 +1,5 @@
 package Wallet.DAO;
 
-import Wallet.Entity.Currency;
 import Wallet.Entity.TransferHistory;
 import lombok.AllArgsConstructor;
 

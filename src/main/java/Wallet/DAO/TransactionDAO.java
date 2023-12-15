@@ -1,6 +1,5 @@
 package Wallet.DAO;
 
-import Wallet.Entity.MoneyFlow;
 import Wallet.Entity.Transaction;
 import lombok.AllArgsConstructor;
 
