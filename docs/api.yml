@@ -337,6 +337,55 @@ paths:
           $ref: "#/components/responses/400"
         '500':
           $ref: "#/components/responses/500"
+  /account/{sourceAccountId}/transfer:
+    post:
+      tags:
+        - "account"
+      summary: Transfer money between accounts
+      operationId: transferMoney
+      parameters:
+        - name: sourceAccountId
+          in: path
+          required: true
+          description: ID of the source account
+          schema:
+            type: string
+            format: uuid
+        - name: destinationAccountId
+          in: query
+          required: true
+          description: ID of the destination account
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount:
+                  type: number
+                category:
+                  type: string
+                  format: uuid
+      responses:
+        '200':
+          description: Money transferred successfully between accounts
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  sourceAccount:
+                    $ref: "#/components/schemas/account"
+                  destinationAccount:
+                    $ref: "#/components/schemas/account"
+        '400':
+          $ref: "#/components/responses/400"
+        '500':
+          $ref: "#/components/responses/500"
 components:
   schemas:
     currency:
