@@ -386,7 +386,6 @@ paths:
           $ref: "#/components/responses/400"
         '500':
           $ref: "#/components/responses/500"
-  paths:
   /account/{accountId}/balance/exchange:
     get:
       tags:
