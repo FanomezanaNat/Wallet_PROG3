@@ -258,6 +258,48 @@ paths:
           $ref: "#/components/responses/400"
         '500':
           $ref: "#/components/responses/500"
+  /account/{accountId}/balance/history:
+    get:
+      tags:
+        - "account"
+      summary: Get account balance history within a period
+      operationId: getBalanceHistory
+      parameters:
+        - name: accountId
+          in: path
+          required: true
+          description: ID of the account
+          schema:
+            type: string
+            format: uuid
+        - name: start_date
+          in: query
+          required: true
+          description: Start date for balance history
+          schema:
+            type: string
+            format: date-time
+        - name: end_date
+          in: query
+          required: true
+          description: End date for balance history
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: Successfully retrieved account balance history within the period
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: number
+                  format: double
+        '400':
+          $ref: "#/components/responses/400"
+        '500':
+          $ref: "#/components/responses/500"
 components:
   schemas:
     currency:
