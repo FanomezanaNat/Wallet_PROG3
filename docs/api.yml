@@ -517,6 +517,33 @@ components:
         dateEffect:
           type: string
           format: date-time
+    moneyFlow:
+        type: object
+        properties:
+          idAccount:
+            type: string
+            format: uuid
+          totalEntrance:
+            type: number
+            format: double
+          totalExit:
+            type: number
+            format: double
+    transferHistory:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        debitTransactionId:
+          type: string
+          format: uuid
+        creditTransactionId:
+          type: string
+          format: uuid
+        transferDate:
+          type: string
+          format: date-time
     Exception:
           type: object
           properties:
