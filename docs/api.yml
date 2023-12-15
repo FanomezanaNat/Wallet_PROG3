@@ -452,7 +452,7 @@ components:
         currency: 
           type: string  
           format: uuid
-    transaction:
+   
       type: object
       properties:
         id:
@@ -468,6 +468,24 @@ components:
         amount:
           type: integer
         Account:
+          type: string
+          format: uuid
+    transaction:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        transactionDate:
+          type: string
+          format: date-time
+        amount:
+          type: number
+          format: double
+        category:
+          type: string
+          format: uuid
+        account:
           type: string
           format: uuid
     categoryAmount:
