@@ -1,4 +1,4 @@
-openapi: '3.0.2'
+openapi: '3.1.0'
 info:
   title: Wallet management
   version: '1.1'
@@ -222,7 +222,42 @@ paths:
           $ref: "#/components/responses/400"
         '500':
           $ref: "#/components/responses/500"
-
+  /account/{accountId}/balance:
+    get:
+      tags:
+        - "account"
+      summary: Get account balance at a specific date
+      operationId: getBalanceAtDate
+      parameters:
+        - name: accountId
+          in: path
+          required: true
+          description: ID of the account
+          schema:
+            type: string
+            format: uuid
+        - name: date
+          in: query
+          required: true
+          description: Date for the account balance
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: Successfully retrieved account balance at date
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  balance:
+                    type: number
+                    format: double
+        '400':
+          $ref: "#/components/responses/400"
+        '500':
+          $ref: "#/components/responses/500"
 components:
   schemas:
     currency:
