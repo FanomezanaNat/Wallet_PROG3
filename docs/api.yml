@@ -435,6 +435,26 @@ paths:
                   $ref: "#/components/schemas/transferHistory"
         '500':
           $ref: "#/components/responses/500"
+    post:
+      tags:
+        - "transferHistory"
+      summary: Save a transfer history entry
+      operationId: saveTransferHistory
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/transferHistory"
+      responses:
+        '200':
+          description: Transfer history entry saved successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/transferHistory"
+        '500':
+          $ref: "#/components/responses/500"
   /transferHistory/{startDate}/{endDate}:
     get:
       tags:
