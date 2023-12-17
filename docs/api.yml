@@ -140,8 +140,7 @@ paths:
           required: true
           description: ID of the currency to update
           schema:
-            type: string
-            format: uuid
+            $ref: "#/components/schemas/id"
       requestBody:
         required: true
         content:
@@ -201,8 +200,7 @@ paths:
           required: true
           description: ID of the transaction to update
           schema:
-            type: string
-            format: uuid
+            $ref: "#/components/schemas/id"
       requestBody:
         required: true
         content:
@@ -232,8 +230,7 @@ paths:
           required: true
           description: ID of the account
           schema:
-            type: string
-            format: uuid
+            $ref: "#/components/schemas/id"
         - name: date
           in: query
           required: true
@@ -268,8 +265,7 @@ paths:
           required: true
           description: ID of the account
           schema:
-            type: string
-            format: uuid
+            $ref: "#/components/schemas/id"
         - name: start_date
           in: query
           required: true
@@ -310,8 +306,7 @@ paths:
           required: true
           description: ID of the account
           schema:
-            type: string
-            format: uuid
+            $ref: "#/components/schemas/id"
       requestBody:
         required: true
         content:
@@ -347,15 +342,13 @@ paths:
           required: true
           description: ID of the source account
           schema:
-            type: string
-            format: uuid
+            $ref: "#/components/schemas/id"
         - name: destinationAccountId
           in: query
           required: true
           description: ID of the destination account
           schema:
-            type: string
-            format: uuid
+            $ref: "#/components/schemas/id"
       requestBody:
         required: true
         content:
@@ -396,8 +389,7 @@ paths:
           required: true
           description: ID of the account
           schema:
-            type: string
-            format: uuid
+            $ref: "#/components/schemas/id"
         - name: date
           in: query
           required: true
@@ -488,6 +480,42 @@ paths:
                   $ref: "#/components/schemas/transferHistory"
         '500':
           $ref: "#/components/responses/500"
+  /moneyFlow/{idAccount}/dateRange:
+    get:
+      tags:
+        - "moneyFlow"
+      summary: Get money flow by date range for an account
+      operationId: getMoneyFlowByDateRange
+      parameters:
+        - name: idAccount
+          in: path
+          required: true
+          description: ID of the account
+          schema:
+            $ref: "#/components/schemas/id"
+        - name: startDate
+          in: query
+          required: true
+          description: Start date for money flow
+          schema:
+            type: string
+            format: date
+        - name: endDate
+          in: query
+          required: true
+          description: End date for money flow
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: Successfully retrieved money flow for the specified date range
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/moneyFlow"
+        '500':
+          $ref: "#/components/responses/500"
 components:
   schemas:
     currency:
@@ -569,8 +597,7 @@ components:
         type: object
         properties:
           idAccount:
-            type: string
-            format: uuid
+            $ref: "#/components/schemas/id"
           totalEntrance:
             type: number
             format: double
@@ -598,6 +625,9 @@ components:
     date:
       type: string
       format: date
+    date-time:
+      type: string
+      format: date-time
     Exception:
           type: object
           properties:
