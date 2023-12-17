@@ -9,6 +9,7 @@ tags:
   - name: "currency"
   - name: "account"
   - name: "transaction"
+  - name: "transferHistory"
 paths:
   /currency:
     get:
@@ -49,7 +50,6 @@ paths:
           $ref: "#/components/responses/400"
         '500':
           $ref: "#/components/responses/500"
-    
   /account:
     get:
       tags:
@@ -89,7 +89,6 @@ paths:
           $ref: "#/components/responses/400"
         '500':
           $ref: "#/components/responses/500"
-   
   /transaction:
     get:
       tags:
@@ -128,8 +127,6 @@ paths:
           $ref: "#/components/responses/400"
         '500':
           $ref: "#/components/responses/500"
-
-    
   /currency/{id}:
     put:
       tags:
@@ -421,7 +418,55 @@ paths:
           $ref: "#/components/responses/400"
         '500':
           $ref: "#/components/responses/500"
-
+  /transferHistory:
+    get:
+      tags:
+        - "transferHistory"
+      summary: Get all transfer history
+      operationId: getAllTransferHistory
+      responses:
+        '200':
+          description: Successfully retrieved all transfer history
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/transferHistory"
+        '500':
+          $ref: "#/components/responses/500"
+  /transferHistory/{startDate}/{endDate}:
+    get:
+      tags:
+        - "transferHistory"
+      summary: Get transfer history within a date range
+      operationId: getTransferHistoryInRange
+      parameters:
+        - name: startDate
+          in: path
+          required: true
+          description: Start date for transfer history
+          schema:
+            type: string
+            format: date-time
+        - name: endDate
+          in: path
+          required: true
+          description: End date for transfer history
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: Successfully retrieved transfer history within the date range
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/transferHistory"
+        '500':
+          $ref: "#/components/responses/500"
 components:
   schemas:
     currency:
