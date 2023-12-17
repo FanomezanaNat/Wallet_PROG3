@@ -1,7 +1,7 @@
 openapi: '3.0.3'
 info:
   title: Wallet management
-  version: '4.1'
+  version: '4.1.5'
   description: this documentation describes the information about a wallet that we've done 
 servers:
   - url: https://wallet.v1.com
@@ -236,8 +236,7 @@ paths:
           required: true
           description: Date for the account balance
           schema:
-            type: string
-            format: date-time
+            $ref: "#/components/schemas/date-time"
       responses:
         '200':
           description: Successfully retrieved account balance at date
@@ -271,15 +270,13 @@ paths:
           required: true
           description: Start date for balance history
           schema:
-            type: string
-            format: date-time
+            $ref: "#/components/schemas/date-time"
         - name: end_date
           in: query
           required: true
           description: End date for balance history
           schema:
-            type: string
-            format: date-time
+            $ref: "#/components/schemas/date-time"
       responses:
         '200':
           description: Successfully retrieved account balance history within the period
@@ -395,8 +392,7 @@ paths:
           required: true
           description: Date for the account balance
           schema:
-            type: string
-            format: date-time
+            $ref: "#/components/schemas/date-time"
       responses:
         '200':
           description: Successfully retrieved account balance at date with currency exchange
@@ -460,15 +456,13 @@ paths:
           required: true
           description: Start date for transfer history
           schema:
-            type: string
-            format: date-time
+            $ref: "#/components/schemas/date-time"
         - name: endDate
           in: path
           required: true
           description: End date for transfer history
           schema:
-            type: string
-            format: date-time
+            $ref: "#/components/schemas/date-time"
       responses:
         '200':
           description: Successfully retrieved transfer history within the date range
@@ -498,15 +492,13 @@ paths:
           required: true
           description: Start date for money flow
           schema:
-            type: string
-            format: date
+            $ref: "#/components/schemas/date"
         - name: endDate
           in: query
           required: true
           description: End date for money flow
           schema:
-            type: string
-            format: date
+            $ref: "#/components/schemas/date"
       responses:
         '200':
           description: Successfully retrieved money flow for the specified date range
