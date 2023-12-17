@@ -595,7 +595,9 @@ components:
     id:
       type: string
       format: uuid
-    
+    date:
+      type: string
+      format: date
     Exception:
           type: object
           properties:
