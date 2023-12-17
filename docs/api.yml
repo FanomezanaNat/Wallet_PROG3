@@ -11,6 +11,7 @@ tags:
   - name: "transaction"
   - name: "transferHistory"
   - name: "moneyFlow"
+  - name: "currencyValue"
 paths:
   /currency:
     get:
@@ -506,6 +507,60 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/moneyFlow"
+        '500':
+          $ref: "#/components/responses/500"
+  /currencyValue:
+    get:
+      tags:
+        - "currencyValue"
+      summary: Get currency value by date
+      operationId: getCurrencyValueByDate
+      parameters:
+        - name: date
+          in: query
+          required: true
+          description: Date for currency value
+          schema:
+            $ref: "#/components/schemas/date-time"
+      responses:
+        '200':
+          description: Successfully retrieved currency value by date
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/currencyValue"
+        '500':
+          $ref: "#/components/responses/500"
+
+  /currencyValue/{parameter}/analysis:
+    get:
+      tags:
+        - "currencyValue"
+      summary: Perform currency analysis
+      operationId: performCurrencyAnalysis
+      parameters:
+        - name: parameter
+          in: path
+          required: true
+          description: Parameter for currency analysis (e.g., average, median)
+          schema:
+            type: string
+        - name: date
+          in: query
+          required: true
+          description: Date for currency analysis
+          schema:
+            $ref: "#/components/schemas/date-time"
+      responses:
+        '200':
+          description: Successfully performed currency analysis
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: number
         '500':
           $ref: "#/components/responses/500"
 components:
