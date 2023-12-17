@@ -10,6 +10,7 @@ tags:
   - name: "account"
   - name: "transaction"
   - name: "transferHistory"
+  - name: "moneyFlow"
 paths:
   /currency:
     get:
@@ -591,6 +592,10 @@ components:
         transferDate:
           type: string
           format: date-time
+    id:
+      type: string
+      format: uuid
+    
     Exception:
           type: object
           properties:
