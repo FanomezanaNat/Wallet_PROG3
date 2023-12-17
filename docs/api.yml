@@ -12,6 +12,7 @@ tags:
   - name: "transferHistory"
   - name: "moneyFlow"
   - name: "currencyValue"
+  - name: "categoryAmounts"
 paths:
   /currency:
     get:
@@ -531,7 +532,6 @@ paths:
                 $ref: "#/components/schemas/currencyValue"
         '500':
           $ref: "#/components/responses/500"
-
   /currencyValue/{parameter}/analysis:
     get:
       tags:
@@ -561,6 +561,43 @@ paths:
                 properties:
                   result:
                     type: number
+        '500':
+          $ref: "#/components/responses/500"
+  /categoryAmounts/{accountId}/dateRangeWithZero:
+    get:
+      tags:
+        - "categoryAmounts"
+      summary: Get category amounts by date range including zero amounts
+      operationId: getCategoryAmountsByDateRangeWithZero
+      parameters:
+        - name: accountId
+          in: path
+          required: true
+          description: ID of the account
+          schema:
+            type: string
+            format: uuid
+        - name: startDate
+          in: query
+          required: true
+          description: Start date for category amounts
+          schema:
+            $ref: "#/components/schemas/date-time"
+        - name: endDate
+          in: query
+          required: true
+          description: End date for category amounts
+          schema:
+            $ref: "#/components/schemas/date-time"
+      responses:
+        '200':
+          description: Successfully retrieved category amounts including zero amounts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/categoryAmount"
         '500':
           $ref: "#/components/responses/500"
 components:
