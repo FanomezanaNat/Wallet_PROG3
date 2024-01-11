@@ -91,4 +91,9 @@ public class AccountDAO implements CrudOperations<Account>{
         }
         return null;
     }
+
+    @Override
+    public Account delete(Account toDelete) {
+        return null;
+    }
 }

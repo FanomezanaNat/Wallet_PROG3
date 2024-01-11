@@ -67,4 +67,9 @@ public class CurrencyDAO implements CrudOperations<Currency>{
         }
         return null;
     }
+
+    @Override
+    public Currency delete(Currency toDelete) {
+        return null;
+    }
 }

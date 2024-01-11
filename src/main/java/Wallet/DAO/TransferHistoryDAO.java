@@ -70,6 +70,11 @@ public class TransferHistoryDAO implements CrudOperations<TransferHistory> {
         return null;
     }
 
+    @Override
+    public TransferHistory delete(TransferHistory toDelete) {
+        return null;
+    }
+
     List<TransferHistory> getTransferHistoryInDateRange(Timestamp startDate, Timestamp endDate) {
         List<TransferHistory> transferList = new ArrayList<>();
         String sql = "SELECT debitTransactionId, creditTransactionId, transferDate FROM transferHistory WHERE transferDate BETWEEN ? AND ?";

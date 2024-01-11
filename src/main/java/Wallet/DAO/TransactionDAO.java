@@ -71,6 +71,11 @@ public class TransactionDAO implements CrudOperations<Transaction>{
         return null;
     }
 
+    @Override
+    public Transaction delete(Transaction toDelete) {
+        return null;
+    }
+
     public String findTypeById(UUID id){
         String sql = "select type.name from type " +
                 "INNER JOIN category c on type.id = c.type " +
