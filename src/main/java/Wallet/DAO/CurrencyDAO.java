@@ -70,6 +70,16 @@ public class CurrencyDAO implements CrudOperations<Currency>{
 
     @Override
     public Currency delete(Currency toDelete) {
+        String sql = "DELETE from currency where id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql)){
+            statement.setObject(1, toDelete.getId());
+            int rowsDeleted = statement.executeUpdate();
+            if (rowsDeleted == 0) {
+                return toDelete;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         return null;
     }
 }
