@@ -19,16 +19,15 @@ public class AutoCrudOperations<T>  implements CrudOperations<T> {
             field.setAccessible(true);
             attributeNames.add(field.getName());
         }
-
         return attributeNames;
+    }
+
+    private String getTableName(Class<T> clazz) {
+        return clazz.getSimpleName();
     }
 
     @Override
     public List<T> findAll() {
-        /*
-        * Obtenir tous les attributs(utiles) de la classe T (id)
-        * Obtenir le nom de la table liée à T
-        * */
 
         List<Object> attributes;
         String tableName;
