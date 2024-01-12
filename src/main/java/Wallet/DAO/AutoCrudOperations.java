@@ -9,11 +9,11 @@ import java.util.Objects;
 public class AutoCrudOperations<T>  implements CrudOperations<T> {
 
     private Connection connection;
-    private static String FIND_ALL_QUERY = "select {COLUMNS} from {TABLES}";
+    private static final String FIND_ALL_QUERY = "select {COLUMNS} from {TABLES}";
 
-    private List<String> getAttributes() throws IllegalAccessException {
+    private List<String> getAttributes(Class<T> clazz) throws IllegalAccessException {
         List<String> attributeNames = new ArrayList<>();
-        Field[] fields = T.class.getDeclaredFields();
+        Field[] fields = clazz.getDeclaredFields();
 
         for (Field field : fields) {
             field.setAccessible(true);
@@ -33,9 +33,7 @@ public class AutoCrudOperations<T>  implements CrudOperations<T> {
         List<Object> attributes;
         String tableName;
 
-        return connection.nativeSQL(FIND_ALL_QUERY
-                .replace("{COLUMNS}", {attributes})
-                .replace("{TABLES)",{tableName}));
+        return null;
 
     }
 
