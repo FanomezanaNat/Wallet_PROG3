@@ -9,10 +9,23 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.util.List;
 import java.util.UUID;
 
 public class AccountDAOTest {
+
+    @Test
+    void testFindAll(){
+        DatabaseConnection connectionManager = new DatabaseConnection();
+        try (Connection connection = connectionManager.getConnection()){
+            AccountDAO accountDAO = new AccountDAO(connection);
+            if (connection != null){
+                assertEquals(3,accountDAO.findAll().size());
+            }
+        } catch (SQLException e) {
+            System.err.println("An error occurred while fetching accounts: " + e.getMessage());
+            System.out.println("Failed to retrieve accounts. Please try again later.");
+        }
+    }
 
     @Test
     void testSave(){
