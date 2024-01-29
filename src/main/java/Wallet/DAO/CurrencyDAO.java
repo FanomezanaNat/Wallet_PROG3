@@ -74,7 +74,7 @@ public class CurrencyDAO implements CrudOperations<Currency>{
         try (PreparedStatement statement = connection.prepareStatement(sql)){
             statement.setObject(1, toDelete.getId());
             int rowsDeleted = statement.executeUpdate();
-            if (rowsDeleted == 0) {
+            if (rowsDeleted > 0) {
                 return toDelete;
             }
         } catch (SQLException e) {
