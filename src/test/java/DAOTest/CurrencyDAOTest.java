@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class CurrencyDAOTest {
 
@@ -44,6 +45,23 @@ public class CurrencyDAOTest {
                 for (Currency currency : currenciesToSave){
                     currencyDAO.delete(currency);
                 }
+            }
+        } catch (SQLException e) {
+            System.err.println("An error occurred while fetching accounts: " + e.getMessage());
+            System.out.println("Failed to retrieve accounts. Please try again later.");
+        }
+    }
+
+    @Test
+    void testSave(){
+        DatabaseConnection connectionManager = new DatabaseConnection();
+        try (Connection connection = connectionManager.getConnection()){
+            CurrencyDAO currencyDAO = new CurrencyDAO(connection);
+            if (connection != null){
+                Currency currency = new Currency(UUID.fromString("d7157ff1-9030-4ca6-bbbe-64bed70e6368"),"Yuan","CNY");
+                Currency createdCurrency = currencyDAO.save(currency);
+                assertNotNull(createdCurrency);
+                currencyDAO.delete(currency);
             }
         } catch (SQLException e) {
             System.err.println("An error occurred while fetching accounts: " + e.getMessage());
