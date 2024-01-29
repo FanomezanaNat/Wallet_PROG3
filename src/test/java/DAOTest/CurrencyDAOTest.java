@@ -1,15 +1,12 @@
 package DAOTest;
 
-import Wallet.DAO.AccountDAO;
 import Wallet.DAO.CurrencyDAO;
 import Wallet.DatabaseConfiguration.DatabaseConnection;
-import Wallet.Entity.Account;
 import Wallet.Entity.Currency;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.List;
 import java.util.UUID;
 
@@ -62,6 +59,23 @@ public class CurrencyDAOTest {
                 Currency createdCurrency = currencyDAO.save(currency);
                 assertNotNull(createdCurrency);
                 currencyDAO.delete(currency);
+            }
+        } catch (SQLException e) {
+            System.err.println("An error occurred while fetching accounts: " + e.getMessage());
+            System.out.println("Failed to retrieve accounts. Please try again later.");
+        }
+    }
+
+    @Test
+    void testDelete(){
+        DatabaseConnection connectionManager = new DatabaseConnection();
+        try (Connection connection = connectionManager.getConnection()){
+            CurrencyDAO currencyDAO = new CurrencyDAO(connection);
+            if (connection != null){
+                Currency currency = new Currency(UUID.fromString("d7157ff1-9030-4ca6-bbbe-64bed70e6368"),"Yuan","CNY");
+                Currency createdCurrency = currencyDAO.save(currency);
+                Currency deletedCurrency = currencyDAO.delete(currency);
+                assertEquals(createdCurrency, deletedCurrency);
             }
         } catch (SQLException e) {
             System.err.println("An error occurred while fetching accounts: " + e.getMessage());
