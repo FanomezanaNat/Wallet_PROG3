@@ -22,7 +22,6 @@ public class DatabaseConnection {
             try {
                 Connection connection = DriverManager.getConnection(this.url, this.user, this.password);
                 if (connection != null && connection.isValid(2)) {
-                    System.out.println("Connected successfully! Welcome, User!");
                     return connection;
                 }
             } catch (SQLException e) {

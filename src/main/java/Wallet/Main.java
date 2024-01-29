@@ -79,7 +79,7 @@ public class Main {
                     System.out.println(transaction.toString());
                 }
                 // Creating a new transaction
-                Transaction newTransaction = new Transaction(UUID.randomUUID(), new Timestamp(System.currentTimeMillis()),50000.0,UUID.fromString("98ac1b3e-92e3-11ee-b9d1-0242ac120008"),UUID.fromString("'98abfe06-92e3-11ee-b9d1-0242ac120002'"));
+                Transaction newTransaction = new Transaction(UUID.randomUUID(), new Timestamp(System.currentTimeMillis()),50000.0,UUID.fromString("98ac1b3e-92e3-11ee-b9d1-0242ac120008"),UUID.fromString("98ac0770-92e3-11ee-b9d1-0242ac120002"));
                 Transaction createdTransaction = transactionDAO.save(newTransaction);
                 if (createdTransaction != null) {
                     System.out.println("New transaction created: " + createdTransaction);

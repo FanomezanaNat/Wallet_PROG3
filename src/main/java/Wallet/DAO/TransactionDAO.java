@@ -73,6 +73,16 @@ public class TransactionDAO implements CrudOperations<Transaction>{
 
     @Override
     public Transaction delete(Transaction toDelete) {
+        String sql = "DELETE from transaction where id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql)){
+            statement.setObject(1, toDelete.getId());
+            int rowsDeleted = statement.executeUpdate();
+            if (rowsDeleted > 0) {
+                return toDelete;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         return null;
     }
 

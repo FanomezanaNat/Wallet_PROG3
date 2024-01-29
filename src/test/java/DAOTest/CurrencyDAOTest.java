@@ -24,8 +24,8 @@ public class CurrencyDAOTest {
                 assertEquals(2,currencyDAO.findAll().size());
             }
         } catch (SQLException e) {
-            System.err.println("An error occurred while fetching accounts: " + e.getMessage());
-            System.out.println("Failed to retrieve accounts. Please try again later.");
+            System.err.println("An error occurred while fetching currencies: " + e.getMessage());
+            System.out.println("Failed to retrieve currencies. Please try again later.");
         }
     }
 
@@ -44,8 +44,8 @@ public class CurrencyDAOTest {
                 }
             }
         } catch (SQLException e) {
-            System.err.println("An error occurred while fetching accounts: " + e.getMessage());
-            System.out.println("Failed to retrieve accounts. Please try again later.");
+            System.err.println("An error occurred while fetching currencies: " + e.getMessage());
+            System.out.println("Failed to retrieve currencies. Please try again later.");
         }
     }
 
@@ -61,25 +61,25 @@ public class CurrencyDAOTest {
                 currencyDAO.delete(currency);
             }
         } catch (SQLException e) {
-            System.err.println("An error occurred while fetching accounts: " + e.getMessage());
-            System.out.println("Failed to retrieve accounts. Please try again later.");
+            System.err.println("An error occurred while fetching currencies: " + e.getMessage());
+            System.out.println("Failed to retrieve currencies. Please try again later.");
         }
     }
 
     @Test
-    void testDelete(){
+    void testDelete() {
         DatabaseConnection connectionManager = new DatabaseConnection();
-        try (Connection connection = connectionManager.getConnection()){
+        try (Connection connection = connectionManager.getConnection()) {
             CurrencyDAO currencyDAO = new CurrencyDAO(connection);
-            if (connection != null){
-                Currency currency = new Currency(UUID.fromString("d7157ff1-9030-4ca6-bbbe-64bed70e6368"),"Yuan","CNY");
+            if (connection != null) {
+                Currency currency = new Currency(UUID.fromString("d7157ff1-9030-4ca6-bbbe-64bed70e6368"), "Yuan", "CNY");
                 Currency createdCurrency = currencyDAO.save(currency);
                 Currency deletedCurrency = currencyDAO.delete(currency);
                 assertEquals(createdCurrency, deletedCurrency);
             }
         } catch (SQLException e) {
-            System.err.println("An error occurred while fetching accounts: " + e.getMessage());
-            System.out.println("Failed to retrieve accounts. Please try again later.");
+            System.err.println("An error occurred while fetching currencies: " + e.getMessage());
+            System.out.println("Failed to retrieve currencies. Please try again later.");
         }
     }
 }
